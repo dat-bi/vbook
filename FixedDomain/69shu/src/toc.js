@@ -6,22 +6,22 @@ function execute(url) {
     const match = url.match(regex);
     let book_id = match[1];
     console.log(book_id)
-    let response = fetch(BASE_URL + "/book/" + book_id +"/");
+    let response = fetch(BASE_URL + "/book/" + book_id + "/");
     if (response.ok) {
         let doc = response.html('gbk');
 
-		var data = [];
-		var elems = $.QA(doc, 'div.catalog > ul > li > a:not(#bookcase)');
-		
-		elems.forEach(function(e) {
-			data.push({
-				name: formatName(e.text()),
-				url: e.attr('href'),
-				host: BASE_URL
-			})
-		});
+        var data = [];
+        var elems = $.QA(doc, 'div.catalog > ul > li > a:not(#bookcase)');
 
-		return Response.success(data);
+        elems.forEach(function (e) {
+            data.push({
+                name: formatName(e.text()),
+                url: e.attr('href'),
+                host: BASE_URL
+            })
+        });
+
+        return Response.success(data.reverse());
     }
     return null;
 }
